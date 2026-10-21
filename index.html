@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Clustering Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin:0; padding:0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; padding: 32px; color: #1e293b; }
+        .container { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+        .header { background: #fff; padding: 24px 30px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; }
+        .grid-top { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        .cards-box { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .chart-box { background: #fff; border-radius: 20px; padding: 24px; border: 1px solid #e2e8f0; display:flex; flex-direction:column; align-items:center; }
+        .table-box { background: #fff; border-radius: 20px; border: 1px solid #e2e8f0; overflow: hidden; }
+        .table-header { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+        th { background: #f8fafc; padding: 12px 20px; font-size: 11px; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0; }
+        select { padding: 8px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: 600; font-size: 13px; color: #334155; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1 style="font-size:24px; font-weight:800; color:#0f172a;">Customer Clustering Dashboard</h1>
+                <p style="font-size:13px; color:#64748b; margin-top:4px;">Phân khúc khách hàng K-Means theo Độ tuổi & Điểm chi tiêu</p>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <span style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; padding:6px 14px; border-radius:9999px; font-size:12px; font-weight:700;">K = 4 Cụm</span>
+                <span style="background:#eef2ff; color:#4f46e5; border:1px solid #c7d2fe; padding:6px 14px; border-radius:9999px; font-size:12px; font-weight:700;">Tổng: 200 Khách hàng</span>
+            </div>
+        </div>
+
+        <div class="grid-top">
+            <div class="cards-box">
+    <div style="background:#fff; border:1px solid #c7d2fe; border-radius:16px; padding:20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 12px; border-radius:9999px; font-weight:700; font-size:12px;">Cụm 0</span>
+            <span style="color:#94a3b8; font-weight:700; font-size:13px;">24.0%</span>
+        </div>
+        <div style="font-size:26px; font-weight:800; color:#0f172a;">48 <span style="font-size:13px; font-weight:500; color:#64748b;">khách</span></div>
+        <div style="margin-top:14px; padding-top:12px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; font-size:12px; color:#64748b;">
+            <span>Tuổi TB: <strong style="color:#1e293b;">55.7</strong></span>
+            <span>Chi tiêu TB: <strong style="color:#1e293b;">48.2</strong></span>
+        </div>
+    </div>
+    
+    <div style="background:#fff; border:1px solid #a7f3d0; border-radius:16px; padding:20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 12px; border-radius:9999px; font-weight:700; font-size:12px;">Cụm 1</span>
+            <span style="color:#94a3b8; font-weight:700; font-size:13px;">28.5%</span>
+        </div>
+        <div style="font-size:26px; font-weight:800; color:#0f172a;">57 <span style="font-size:13px; font-weight:500; color:#64748b;">khách</span></div>
+        <div style="margin-top:14px; padding-top:12px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; font-size:12px; color:#64748b;">
+            <span>Tuổi TB: <strong style="color:#1e293b;">30.2</strong></span>
+            <span>Chi tiêu TB: <strong style="color:#1e293b;">82.4</strong></span>
+        </div>
+    </div>
+    
+    <div style="background:#fff; border:1px solid #fde68a; border-radius:16px; padding:20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 12px; border-radius:9999px; font-weight:700; font-size:12px;">Cụm 2</span>
+            <span style="color:#94a3b8; font-weight:700; font-size:13px;">24.0%</span>
+        </div>
+        <div style="font-size:26px; font-weight:800; color:#0f172a;">48 <span style="font-size:13px; font-weight:500; color:#64748b;">khách</span></div>
+        <div style="margin-top:14px; padding-top:12px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; font-size:12px; color:#64748b;">
+            <span>Tuổi TB: <strong style="color:#1e293b;">43.3</strong></span>
+            <span>Chi tiêu TB: <strong style="color:#1e293b;">15.0</strong></span>
+        </div>
+    </div>
+    
+    <div style="background:#fff; border:1px solid #fecdd3; border-radius:16px; padding:20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 12px; border-radius:9999px; font-weight:700; font-size:12px;">Cụm 3</span>
+            <span style="color:#94a3b8; font-weight:700; font-size:13px;">23.5%</span>
+        </div>
+        <div style="font-size:26px; font-weight:800; color:#0f172a;">47 <span style="font-size:13px; font-weight:500; color:#64748b;">khách</span></div>
+        <div style="margin-top:14px; padding-top:12px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; font-size:12px; color:#64748b;">
+            <span>Tuổi TB: <strong style="color:#1e293b;">27.6</strong></span>
+            <span>Chi tiêu TB: <strong style="color:#1e293b;">49.1</strong></span>
+        </div>
+    </div>
+    </div>
+            <div class="chart-box">
+                <h3 style="font-size:13px; font-weight:700; color:#64748b; text-transform:uppercase; margin-bottom:16px; align-self:flex-start;">Tỷ lệ phân bổ</h3>
+                <div style="width:230px; height:230px;"><canvas id="pieChart"></canvas></div>
+            </div>
+        </div>
+
+        <div class="table-box">
+            <div class="table-header">
+                <div>
+                    <h2 style="font-size:16px; font-weight:800; color:#0f172a;">Danh sách chi tiết khách hàng</h2>
+                    <p style="font-size:12px; color:#64748b;">Xem và lọc dữ liệu từng nhóm khách hàng</p>
+                </div>
+                <div>
+                    <label style="font-size:12px; font-weight:600; color:#64748b; margin-right:6px;">Lọc cụm:</label>
+                    <select id="clusterFilter" onchange="filterTable()">
+                        <option value="all">Tất cả cụm</option>
+                        <option value="0">Cụm 0</option>
+                        <option value="1">Cụm 1</option>
+                        <option value="2">Cụm 2</option>
+                        <option value="3">Cụm 3</option>
+                    </select>
+                </div>
+            </div>
+            <div style="max-height:450px; overflow-y:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Tuổi (Age)</th>
+                            <th>Thu nhập</th>
+                            <th>Điểm chi tiêu</th>
+                            <th style="text-align:center;">Cụm</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">1</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">15</td>
+        <td style="padding:14px 20px; color:#475569;">39</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">2</td>
+        <td style="padding:14px 20px; color:#475569;">21</td>
+        <td style="padding:14px 20px; color:#475569;">15</td>
+        <td style="padding:14px 20px; color:#475569;">81</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">3</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; color:#475569;">16</td>
+        <td style="padding:14px 20px; color:#475569;">6</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">4</td>
+        <td style="padding:14px 20px; color:#475569;">23</td>
+        <td style="padding:14px 20px; color:#475569;">16</td>
+        <td style="padding:14px 20px; color:#475569;">77</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">5</td>
+        <td style="padding:14px 20px; color:#475569;">31</td>
+        <td style="padding:14px 20px; color:#475569;">17</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">6</td>
+        <td style="padding:14px 20px; color:#475569;">22</td>
+        <td style="padding:14px 20px; color:#475569;">17</td>
+        <td style="padding:14px 20px; color:#475569;">76</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">7</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; color:#475569;">18</td>
+        <td style="padding:14px 20px; color:#475569;">6</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">8</td>
+        <td style="padding:14px 20px; color:#475569;">23</td>
+        <td style="padding:14px 20px; color:#475569;">18</td>
+        <td style="padding:14px 20px; color:#475569;">94</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">9</td>
+        <td style="padding:14px 20px; color:#475569;">64</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">3</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">10</td>
+        <td style="padding:14px 20px; color:#475569;">30</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">72</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">11</td>
+        <td style="padding:14px 20px; color:#475569;">67</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">14</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">12</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">99</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">13</td>
+        <td style="padding:14px 20px; color:#475569;">58</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; color:#475569;">15</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">14</td>
+        <td style="padding:14px 20px; color:#475569;">24</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; color:#475569;">77</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">15</td>
+        <td style="padding:14px 20px; color:#475569;">37</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; color:#475569;">13</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">16</td>
+        <td style="padding:14px 20px; color:#475569;">22</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; color:#475569;">79</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">17</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; color:#475569;">21</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">18</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; color:#475569;">21</td>
+        <td style="padding:14px 20px; color:#475569;">66</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">19</td>
+        <td style="padding:14px 20px; color:#475569;">52</td>
+        <td style="padding:14px 20px; color:#475569;">23</td>
+        <td style="padding:14px 20px; color:#475569;">29</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">20</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; color:#475569;">23</td>
+        <td style="padding:14px 20px; color:#475569;">98</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">21</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; color:#475569;">24</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">22</td>
+        <td style="padding:14px 20px; color:#475569;">25</td>
+        <td style="padding:14px 20px; color:#475569;">24</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">23</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; color:#475569;">25</td>
+        <td style="padding:14px 20px; color:#475569;">5</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">24</td>
+        <td style="padding:14px 20px; color:#475569;">31</td>
+        <td style="padding:14px 20px; color:#475569;">25</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">25</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; color:#475569;">14</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">26</td>
+        <td style="padding:14px 20px; color:#475569;">29</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; color:#475569;">82</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">27</td>
+        <td style="padding:14px 20px; color:#475569;">45</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">28</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; color:#475569;">61</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">29</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">29</td>
+        <td style="padding:14px 20px; color:#475569;">31</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">30</td>
+        <td style="padding:14px 20px; color:#475569;">23</td>
+        <td style="padding:14px 20px; color:#475569;">29</td>
+        <td style="padding:14px 20px; color:#475569;">87</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">31</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; color:#475569;">30</td>
+        <td style="padding:14px 20px; color:#475569;">4</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">32</td>
+        <td style="padding:14px 20px; color:#475569;">21</td>
+        <td style="padding:14px 20px; color:#475569;">30</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">33</td>
+        <td style="padding:14px 20px; color:#475569;">53</td>
+        <td style="padding:14px 20px; color:#475569;">33</td>
+        <td style="padding:14px 20px; color:#475569;">4</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">34</td>
+        <td style="padding:14px 20px; color:#475569;">18</td>
+        <td style="padding:14px 20px; color:#475569;">33</td>
+        <td style="padding:14px 20px; color:#475569;">92</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">35</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; color:#475569;">33</td>
+        <td style="padding:14px 20px; color:#475569;">14</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">36</td>
+        <td style="padding:14px 20px; color:#475569;">21</td>
+        <td style="padding:14px 20px; color:#475569;">33</td>
+        <td style="padding:14px 20px; color:#475569;">81</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">37</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; color:#475569;">34</td>
+        <td style="padding:14px 20px; color:#475569;">17</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">38</td>
+        <td style="padding:14px 20px; color:#475569;">30</td>
+        <td style="padding:14px 20px; color:#475569;">34</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">39</td>
+        <td style="padding:14px 20px; color:#475569;">36</td>
+        <td style="padding:14px 20px; color:#475569;">37</td>
+        <td style="padding:14px 20px; color:#475569;">26</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">40</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; color:#475569;">37</td>
+        <td style="padding:14px 20px; color:#475569;">75</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">41</td>
+        <td style="padding:14px 20px; color:#475569;">65</td>
+        <td style="padding:14px 20px; color:#475569;">38</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">42</td>
+        <td style="padding:14px 20px; color:#475569;">24</td>
+        <td style="padding:14px 20px; color:#475569;">38</td>
+        <td style="padding:14px 20px; color:#475569;">92</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">43</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">39</td>
+        <td style="padding:14px 20px; color:#475569;">36</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">44</td>
+        <td style="padding:14px 20px; color:#475569;">31</td>
+        <td style="padding:14px 20px; color:#475569;">39</td>
+        <td style="padding:14px 20px; color:#475569;">61</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">45</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; color:#475569;">39</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">46</td>
+        <td style="padding:14px 20px; color:#475569;">24</td>
+        <td style="padding:14px 20px; color:#475569;">39</td>
+        <td style="padding:14px 20px; color:#475569;">65</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">47</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">55</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">48</td>
+        <td style="padding:14px 20px; color:#475569;">27</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">49</td>
+        <td style="padding:14px 20px; color:#475569;">29</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">50</td>
+        <td style="padding:14px 20px; color:#475569;">31</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">51</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; color:#475569;">52</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">52</td>
+        <td style="padding:14px 20px; color:#475569;">33</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">53</td>
+        <td style="padding:14px 20px; color:#475569;">31</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">54</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">55</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; color:#475569;">45</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">56</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; color:#475569;">41</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">57</td>
+        <td style="padding:14px 20px; color:#475569;">51</td>
+        <td style="padding:14px 20px; color:#475569;">44</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">58</td>
+        <td style="padding:14px 20px; color:#475569;">69</td>
+        <td style="padding:14px 20px; color:#475569;">44</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">59</td>
+        <td style="padding:14px 20px; color:#475569;">27</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; color:#475569;">51</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">60</td>
+        <td style="padding:14px 20px; color:#475569;">53</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">61</td>
+        <td style="padding:14px 20px; color:#475569;">70</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; color:#475569;">56</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">62</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; color:#475569;">55</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">63</td>
+        <td style="padding:14px 20px; color:#475569;">67</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; color:#475569;">52</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">64</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">65</td>
+        <td style="padding:14px 20px; color:#475569;">63</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">51</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">66</td>
+        <td style="padding:14px 20px; color:#475569;">18</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">67</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">68</td>
+        <td style="padding:14px 20px; color:#475569;">68</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">69</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">70</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">71</td>
+        <td style="padding:14px 20px; color:#475569;">70</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; color:#475569;">55</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">72</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">73</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">74</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; color:#475569;">56</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">75</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">76</td>
+        <td style="padding:14px 20px; color:#475569;">26</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">77</td>
+        <td style="padding:14px 20px; color:#475569;">45</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">53</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">78</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">79</td>
+        <td style="padding:14px 20px; color:#475569;">23</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">52</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">80</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">81</td>
+        <td style="padding:14px 20px; color:#475569;">57</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">51</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">82</td>
+        <td style="padding:14px 20px; color:#475569;">38</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">55</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">83</td>
+        <td style="padding:14px 20px; color:#475569;">67</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">41</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">84</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">44</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">85</td>
+        <td style="padding:14px 20px; color:#475569;">21</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">57</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">86</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">87</td>
+        <td style="padding:14px 20px; color:#475569;">55</td>
+        <td style="padding:14px 20px; color:#475569;">57</td>
+        <td style="padding:14px 20px; color:#475569;">58</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">88</td>
+        <td style="padding:14px 20px; color:#475569;">22</td>
+        <td style="padding:14px 20px; color:#475569;">57</td>
+        <td style="padding:14px 20px; color:#475569;">55</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">89</td>
+        <td style="padding:14px 20px; color:#475569;">34</td>
+        <td style="padding:14px 20px; color:#475569;">58</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">90</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; color:#475569;">58</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">91</td>
+        <td style="padding:14px 20px; color:#475569;">68</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; color:#475569;">55</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">92</td>
+        <td style="padding:14px 20px; color:#475569;">18</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; color:#475569;">41</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">93</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">94</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">95</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">96</td>
+        <td style="padding:14px 20px; color:#475569;">24</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; color:#475569;">52</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">97</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">98</td>
+        <td style="padding:14px 20px; color:#475569;">27</td>
+        <td style="padding:14px 20px; color:#475569;">60</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">99</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">61</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">100</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; color:#475569;">61</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">101</td>
+        <td style="padding:14px 20px; color:#475569;">23</td>
+        <td style="padding:14px 20px; color:#475569;">62</td>
+        <td style="padding:14px 20px; color:#475569;">41</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">102</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; color:#475569;">62</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">103</td>
+        <td style="padding:14px 20px; color:#475569;">67</td>
+        <td style="padding:14px 20px; color:#475569;">62</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">104</td>
+        <td style="padding:14px 20px; color:#475569;">26</td>
+        <td style="padding:14px 20px; color:#475569;">62</td>
+        <td style="padding:14px 20px; color:#475569;">55</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">105</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; color:#475569;">62</td>
+        <td style="padding:14px 20px; color:#475569;">56</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">106</td>
+        <td style="padding:14px 20px; color:#475569;">21</td>
+        <td style="padding:14px 20px; color:#475569;">62</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">107</td>
+        <td style="padding:14px 20px; color:#475569;">66</td>
+        <td style="padding:14px 20px; color:#475569;">63</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">108</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">63</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">109</td>
+        <td style="padding:14px 20px; color:#475569;">68</td>
+        <td style="padding:14px 20px; color:#475569;">63</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">110</td>
+        <td style="padding:14px 20px; color:#475569;">66</td>
+        <td style="padding:14px 20px; color:#475569;">63</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">111</td>
+        <td style="padding:14px 20px; color:#475569;">65</td>
+        <td style="padding:14px 20px; color:#475569;">63</td>
+        <td style="padding:14px 20px; color:#475569;">52</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">112</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">63</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">113</td>
+        <td style="padding:14px 20px; color:#475569;">38</td>
+        <td style="padding:14px 20px; color:#475569;">64</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">114</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">64</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">115</td>
+        <td style="padding:14px 20px; color:#475569;">18</td>
+        <td style="padding:14px 20px; color:#475569;">65</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">116</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">65</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">117</td>
+        <td style="padding:14px 20px; color:#475569;">63</td>
+        <td style="padding:14px 20px; color:#475569;">65</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">118</td>
+        <td style="padding:14px 20px; color:#475569;">49</td>
+        <td style="padding:14px 20px; color:#475569;">65</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">119</td>
+        <td style="padding:14px 20px; color:#475569;">51</td>
+        <td style="padding:14px 20px; color:#475569;">67</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">120</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; color:#475569;">67</td>
+        <td style="padding:14px 20px; color:#475569;">57</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">121</td>
+        <td style="padding:14px 20px; color:#475569;">27</td>
+        <td style="padding:14px 20px; color:#475569;">67</td>
+        <td style="padding:14px 20px; color:#475569;">56</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">122</td>
+        <td style="padding:14px 20px; color:#475569;">38</td>
+        <td style="padding:14px 20px; color:#475569;">67</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">123</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">69</td>
+        <td style="padding:14px 20px; color:#475569;">58</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">124</td>
+        <td style="padding:14px 20px; color:#475569;">39</td>
+        <td style="padding:14px 20px; color:#475569;">69</td>
+        <td style="padding:14px 20px; color:#475569;">91</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">125</td>
+        <td style="padding:14px 20px; color:#475569;">23</td>
+        <td style="padding:14px 20px; color:#475569;">70</td>
+        <td style="padding:14px 20px; color:#475569;">29</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">126</td>
+        <td style="padding:14px 20px; color:#475569;">31</td>
+        <td style="padding:14px 20px; color:#475569;">70</td>
+        <td style="padding:14px 20px; color:#475569;">77</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">127</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; color:#475569;">71</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">128</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">71</td>
+        <td style="padding:14px 20px; color:#475569;">95</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">129</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; color:#475569;">71</td>
+        <td style="padding:14px 20px; color:#475569;">11</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">130</td>
+        <td style="padding:14px 20px; color:#475569;">38</td>
+        <td style="padding:14px 20px; color:#475569;">71</td>
+        <td style="padding:14px 20px; color:#475569;">75</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">131</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; color:#475569;">71</td>
+        <td style="padding:14px 20px; color:#475569;">9</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">132</td>
+        <td style="padding:14px 20px; color:#475569;">39</td>
+        <td style="padding:14px 20px; color:#475569;">71</td>
+        <td style="padding:14px 20px; color:#475569;">75</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">133</td>
+        <td style="padding:14px 20px; color:#475569;">25</td>
+        <td style="padding:14px 20px; color:#475569;">72</td>
+        <td style="padding:14px 20px; color:#475569;">34</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">134</td>
+        <td style="padding:14px 20px; color:#475569;">31</td>
+        <td style="padding:14px 20px; color:#475569;">72</td>
+        <td style="padding:14px 20px; color:#475569;">71</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">135</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; color:#475569;">5</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">136</td>
+        <td style="padding:14px 20px; color:#475569;">29</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; color:#475569;">88</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">137</td>
+        <td style="padding:14px 20px; color:#475569;">44</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; color:#475569;">7</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">138</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">139</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">74</td>
+        <td style="padding:14px 20px; color:#475569;">10</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">140</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; color:#475569;">74</td>
+        <td style="padding:14px 20px; color:#475569;">72</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">141</td>
+        <td style="padding:14px 20px; color:#475569;">57</td>
+        <td style="padding:14px 20px; color:#475569;">75</td>
+        <td style="padding:14px 20px; color:#475569;">5</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">142</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">75</td>
+        <td style="padding:14px 20px; color:#475569;">93</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">143</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; color:#475569;">76</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">144</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">76</td>
+        <td style="padding:14px 20px; color:#475569;">87</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">145</td>
+        <td style="padding:14px 20px; color:#475569;">25</td>
+        <td style="padding:14px 20px; color:#475569;">77</td>
+        <td style="padding:14px 20px; color:#475569;">12</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">146</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; color:#475569;">77</td>
+        <td style="padding:14px 20px; color:#475569;">97</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">147</td>
+        <td style="padding:14px 20px; color:#475569;">48</td>
+        <td style="padding:14px 20px; color:#475569;">77</td>
+        <td style="padding:14px 20px; color:#475569;">36</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">148</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">77</td>
+        <td style="padding:14px 20px; color:#475569;">74</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">149</td>
+        <td style="padding:14px 20px; color:#475569;">34</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">22</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">150</td>
+        <td style="padding:14px 20px; color:#475569;">34</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">90</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">151</td>
+        <td style="padding:14px 20px; color:#475569;">43</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">17</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">152</td>
+        <td style="padding:14px 20px; color:#475569;">39</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">88</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">153</td>
+        <td style="padding:14px 20px; color:#475569;">44</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">154</td>
+        <td style="padding:14px 20px; color:#475569;">38</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">76</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">155</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">16</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">156</td>
+        <td style="padding:14px 20px; color:#475569;">27</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">89</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">157</td>
+        <td style="padding:14px 20px; color:#475569;">37</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">1</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">158</td>
+        <td style="padding:14px 20px; color:#475569;">30</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">159</td>
+        <td style="padding:14px 20px; color:#475569;">34</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">1</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">160</td>
+        <td style="padding:14px 20px; color:#475569;">30</td>
+        <td style="padding:14px 20px; color:#475569;">78</td>
+        <td style="padding:14px 20px; color:#475569;">73</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="0" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">161</td>
+        <td style="padding:14px 20px; color:#475569;">56</td>
+        <td style="padding:14px 20px; color:#475569;">79</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#eef2ff; color:#4338ca; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 0</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">162</td>
+        <td style="padding:14px 20px; color:#475569;">29</td>
+        <td style="padding:14px 20px; color:#475569;">79</td>
+        <td style="padding:14px 20px; color:#475569;">83</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">163</td>
+        <td style="padding:14px 20px; color:#475569;">19</td>
+        <td style="padding:14px 20px; color:#475569;">81</td>
+        <td style="padding:14px 20px; color:#475569;">5</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">164</td>
+        <td style="padding:14px 20px; color:#475569;">31</td>
+        <td style="padding:14px 20px; color:#475569;">81</td>
+        <td style="padding:14px 20px; color:#475569;">93</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">165</td>
+        <td style="padding:14px 20px; color:#475569;">50</td>
+        <td style="padding:14px 20px; color:#475569;">85</td>
+        <td style="padding:14px 20px; color:#475569;">26</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">166</td>
+        <td style="padding:14px 20px; color:#475569;">36</td>
+        <td style="padding:14px 20px; color:#475569;">85</td>
+        <td style="padding:14px 20px; color:#475569;">75</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">167</td>
+        <td style="padding:14px 20px; color:#475569;">42</td>
+        <td style="padding:14px 20px; color:#475569;">86</td>
+        <td style="padding:14px 20px; color:#475569;">20</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">168</td>
+        <td style="padding:14px 20px; color:#475569;">33</td>
+        <td style="padding:14px 20px; color:#475569;">86</td>
+        <td style="padding:14px 20px; color:#475569;">95</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">169</td>
+        <td style="padding:14px 20px; color:#475569;">36</td>
+        <td style="padding:14px 20px; color:#475569;">87</td>
+        <td style="padding:14px 20px; color:#475569;">27</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">170</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">87</td>
+        <td style="padding:14px 20px; color:#475569;">63</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">171</td>
+        <td style="padding:14px 20px; color:#475569;">40</td>
+        <td style="padding:14px 20px; color:#475569;">87</td>
+        <td style="padding:14px 20px; color:#475569;">13</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">172</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; color:#475569;">87</td>
+        <td style="padding:14px 20px; color:#475569;">75</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">173</td>
+        <td style="padding:14px 20px; color:#475569;">36</td>
+        <td style="padding:14px 20px; color:#475569;">87</td>
+        <td style="padding:14px 20px; color:#475569;">10</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">174</td>
+        <td style="padding:14px 20px; color:#475569;">36</td>
+        <td style="padding:14px 20px; color:#475569;">87</td>
+        <td style="padding:14px 20px; color:#475569;">92</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">175</td>
+        <td style="padding:14px 20px; color:#475569;">52</td>
+        <td style="padding:14px 20px; color:#475569;">88</td>
+        <td style="padding:14px 20px; color:#475569;">13</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">176</td>
+        <td style="padding:14px 20px; color:#475569;">30</td>
+        <td style="padding:14px 20px; color:#475569;">88</td>
+        <td style="padding:14px 20px; color:#475569;">86</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">177</td>
+        <td style="padding:14px 20px; color:#475569;">58</td>
+        <td style="padding:14px 20px; color:#475569;">88</td>
+        <td style="padding:14px 20px; color:#475569;">15</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">178</td>
+        <td style="padding:14px 20px; color:#475569;">27</td>
+        <td style="padding:14px 20px; color:#475569;">88</td>
+        <td style="padding:14px 20px; color:#475569;">69</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">179</td>
+        <td style="padding:14px 20px; color:#475569;">59</td>
+        <td style="padding:14px 20px; color:#475569;">93</td>
+        <td style="padding:14px 20px; color:#475569;">14</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">180</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; color:#475569;">93</td>
+        <td style="padding:14px 20px; color:#475569;">90</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">181</td>
+        <td style="padding:14px 20px; color:#475569;">37</td>
+        <td style="padding:14px 20px; color:#475569;">97</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">182</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">97</td>
+        <td style="padding:14px 20px; color:#475569;">86</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">183</td>
+        <td style="padding:14px 20px; color:#475569;">46</td>
+        <td style="padding:14px 20px; color:#475569;">98</td>
+        <td style="padding:14px 20px; color:#475569;">15</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">184</td>
+        <td style="padding:14px 20px; color:#475569;">29</td>
+        <td style="padding:14px 20px; color:#475569;">98</td>
+        <td style="padding:14px 20px; color:#475569;">88</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="3" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">185</td>
+        <td style="padding:14px 20px; color:#475569;">41</td>
+        <td style="padding:14px 20px; color:#475569;">99</td>
+        <td style="padding:14px 20px; color:#475569;">39</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fff1f2; color:#be123c; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 3</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">186</td>
+        <td style="padding:14px 20px; color:#475569;">30</td>
+        <td style="padding:14px 20px; color:#475569;">99</td>
+        <td style="padding:14px 20px; color:#475569;">97</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">187</td>
+        <td style="padding:14px 20px; color:#475569;">54</td>
+        <td style="padding:14px 20px; color:#475569;">101</td>
+        <td style="padding:14px 20px; color:#475569;">24</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">188</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; color:#475569;">101</td>
+        <td style="padding:14px 20px; color:#475569;">68</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">189</td>
+        <td style="padding:14px 20px; color:#475569;">41</td>
+        <td style="padding:14px 20px; color:#475569;">103</td>
+        <td style="padding:14px 20px; color:#475569;">17</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">190</td>
+        <td style="padding:14px 20px; color:#475569;">36</td>
+        <td style="padding:14px 20px; color:#475569;">103</td>
+        <td style="padding:14px 20px; color:#475569;">85</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">191</td>
+        <td style="padding:14px 20px; color:#475569;">34</td>
+        <td style="padding:14px 20px; color:#475569;">103</td>
+        <td style="padding:14px 20px; color:#475569;">23</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">192</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">103</td>
+        <td style="padding:14px 20px; color:#475569;">69</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">193</td>
+        <td style="padding:14px 20px; color:#475569;">33</td>
+        <td style="padding:14px 20px; color:#475569;">113</td>
+        <td style="padding:14px 20px; color:#475569;">8</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">194</td>
+        <td style="padding:14px 20px; color:#475569;">38</td>
+        <td style="padding:14px 20px; color:#475569;">113</td>
+        <td style="padding:14px 20px; color:#475569;">91</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">195</td>
+        <td style="padding:14px 20px; color:#475569;">47</td>
+        <td style="padding:14px 20px; color:#475569;">120</td>
+        <td style="padding:14px 20px; color:#475569;">16</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">196</td>
+        <td style="padding:14px 20px; color:#475569;">35</td>
+        <td style="padding:14px 20px; color:#475569;">120</td>
+        <td style="padding:14px 20px; color:#475569;">79</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">197</td>
+        <td style="padding:14px 20px; color:#475569;">45</td>
+        <td style="padding:14px 20px; color:#475569;">126</td>
+        <td style="padding:14px 20px; color:#475569;">28</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">198</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">126</td>
+        <td style="padding:14px 20px; color:#475569;">74</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="2" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">199</td>
+        <td style="padding:14px 20px; color:#475569;">32</td>
+        <td style="padding:14px 20px; color:#475569;">137</td>
+        <td style="padding:14px 20px; color:#475569;">18</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#fffbeb; color:#b45309; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 2</span>
+        </td>
+    </tr>
+    
+    <tr data-cluster="1" style="border-bottom:1px solid #f1f5f9;">
+        <td style="padding:14px 20px; font-weight:600; color:#1e293b;">200</td>
+        <td style="padding:14px 20px; color:#475569;">30</td>
+        <td style="padding:14px 20px; color:#475569;">137</td>
+        <td style="padding:14px 20px; color:#475569;">83</td>
+        <td style="padding:14px 20px; text-align:center;">
+            <span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">Cụm 1</span>
+        </td>
+    </tr>
+    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Chart(document.getElementById('pieChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ["C\u1ee5m 0", "C\u1ee5m 1", "C\u1ee5m 2", "C\u1ee5m 3"],
+                datasets: [{
+                    data: [48, 57, 48, 47],
+                    backgroundColor: ["#6366f1", "#10b981", "#f59e0b", "#f43f5e"],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, padding: 14 } } },
+                cutout: '68%'
+            }
+        });
+
+        function filterTable() {
+            const val = document.getElementById('clusterFilter').value;
+            const rows = document.querySelectorAll('#tableBody tr');
+            rows.forEach(r => {
+                r.style.display = (val === 'all' || r.getAttribute('data-cluster') === val) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
